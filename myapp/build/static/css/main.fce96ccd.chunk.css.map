@@ -1,0 +1,1 @@
+{"version":3,"sources":["styles.css"],"names":[],"mappings":"AAAA,QACI,qBACJ,CACA,aACI,UAAU,CACV,WAAW,CACX,eACJ","file":"main.fce96ccd.chunk.css","sourcesContent":[".numPad{\r\n    padding:5px!important;\r\n}\r\n.numPad .btn{\r\n    width:100%;\r\n    height:50px;\r\n    padding-top: 8px;\r\n}"]}
