@@ -5,7 +5,7 @@ import Numpad from './NumPad/index.js'
 import Api from '../../managers/api'
 
 import './styles.css'
-import request from 'axios'
+
 
 class Login extends Component{
     constructor(props){
