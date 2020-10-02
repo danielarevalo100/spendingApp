@@ -1,0 +1,38 @@
+html,body,#root{
+    height: 100%;
+}
+
+.dashboard .btn.primary{
+    background-color: #3f51b5;
+}
+
+.dashboard .dashboard-header{
+    background-color: #3f51b5;
+}
+.dashboard .dashboard-balance{
+    padding: 30px;
+}
+.dashboard .dashboard-actions{
+    width: 100%;
+}
+.dashboard .dashboard-actions .dashboard-actions-tabs{
+    width: 100%;
+    flex-direction: row!important;
+    --webkit-box-shadow: 0px -2px 15px -8px rgba(153,153,153,1);
+    -moz-box-shadow: 0px -2px 15px -8px rgba(153,153,153,1);
+    box-shadow: 0px -2px 15px -8px rgba(153,153,153,1);
+}
+
+.dashboard .dashboard-actions .dashboard-actions-tabs .dashboard-actions-tabs-send,
+.dashboard .dashboard-actions .dashboard-actions-tabs .dashboard-actions-tabs-request{
+    width: 50%;
+    padding: 10px;
+}
+.dashboard .dashboard-actions .dashboard-actions-tabs-marker{
+    width: 50%;
+    height: 2px;
+    background-color: #3f51b5;
+    position: absolute!important;
+    bottom: 0;
+    transition: .3s;
+}

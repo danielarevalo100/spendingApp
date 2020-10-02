@@ -1,5 +1,7 @@
 import React,{Component} from "react";
 import Login from './pages/login';
+import Dashboard from './pages/Dashboard'
+import Activity from './pages/Activity'
 import {BrowserRouter as Router, Switch,Route} from "react-router-dom"
 import 'materialize-css/dist/css/materialize.min.css'
 
@@ -8,9 +10,9 @@ class App extends Component{
         return(
             <Router>
                 <Switch>
-                    <Route exact path="/">
-                        <Login/>
-                    </Route>
+                    <Route exact path="/" component={Login} />
+                    <Route exact path="/dashboard" component={Dashboard} />
+                    <Route exact path='/activity'component={Activity}/>
                 </Switch>
             </Router>
         )

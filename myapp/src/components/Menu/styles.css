@@ -1,0 +1,18 @@
+.menu{
+    position: absolute!important;
+    top: 0;
+    transition: 0.3s;
+    background-color: #ffffff;
+    color: #ffffff!important;
+    height: 100%;
+    justify-content: flex-start!important;
+}
+.menu .menu-header{
+    background-color: #3f51b5;
+    padding: 10px;
+}
+
+.menu .menu-navigation .menu-navigation-item{
+    padding: 5px;
+    border-bottom: #cccccc solid 1px;
+}
