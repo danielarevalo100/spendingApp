@@ -1,9 +1,9 @@
 import React,{Component} from "react";
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard'
-import Activity from './pages/Activity'
 import {BrowserRouter as Router, Switch,Route} from "react-router-dom"
 import 'materialize-css/dist/css/materialize.min.css'
+import Login from './pages/Login/index.js';
+import Dashboard from './pages/Dashboard/index.js'
+import Activity from './pages/Activity/index.js'
 
 class App extends Component{
     render(){
