@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Switch,Route} from "react-router-dom"
 import 'materialize-css/dist/css/materialize.min.css'
 import Login from './pages/login/index.js';
 import Dashboard from './pages/dashboard/index.js'
-import Activity from './pages/activity/index.js'
+import Activity from './pages/Activity/index.js'
 
 class App extends Component{
     render(){
