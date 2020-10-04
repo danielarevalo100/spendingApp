@@ -75,7 +75,7 @@ class Activity extends Component{
                                 {transaction.type==='SEND'?<SendIcon style={{fill:'#ffffff'}}/>:<RequestIcon/>}    
                             </View>
                             <View style={{marginLeft:'10px'}}>
-                                <Label fontSize={1.3}>{`To: ${transaction.email}`}</Label>
+                                <Label fontSize={1.1}>{`To: ${transaction.email}`}</Label>
                             </View>
                             <View style={{marginLeft:'auto'}}>
                                 {transaction.status == 'PENDING'?<WatchIcon style={{fill:'#ffcf64',fontSize:'35px'}}/>:transaction.status == 'DONE'?<CheckIcon style={{fill:'#049a04',fontSize:'35px'}}/>:<CancelIcon style={{fill:'#e31b1b',fontSize:'35px'}}/>}
