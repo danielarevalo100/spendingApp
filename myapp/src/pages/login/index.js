@@ -3,6 +3,7 @@ import {Component} from "react"
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import Numpad from './NumPad/index.js'
 import Api from '../../managers/api'
+import Notifications from '../../managers/notifications'
 
 import './styles.css'
 
@@ -15,11 +16,17 @@ class Login extends Component{
             wrongPassword:false
         }
     }
+    componentWillMount(){
+
+    }
+    
     componentDidMount(){
+        
         
         if(localStorage.getItem('token')){
             Api.users.login(null,(result)=>{
                 if(result){
+                    
                     this.props.history.push('/dashboard')
                 }
             })

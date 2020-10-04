@@ -41,10 +41,10 @@ class Activity extends Component{
                     balance: res.user.balance,
                     id: res.user._id
                 })
-                console.log('I am here')
+                
                 const id = this.state.id
                 Api.transactions.get(id,((response)=>{
-                    console.log(response)
+                    
                     this.setState({
                         transactions:response,
                         showLoader:false

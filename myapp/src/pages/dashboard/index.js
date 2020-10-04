@@ -61,7 +61,7 @@ class Dashboard extends Component{
         })
     }
     handleSendSubmit(){
-        console.log('submiting')
+        
         const {id,balance,type,send}= this.state;
         if(type==='SEND'){
             if(send.email && send.amount && send.emailConfirmation){
@@ -74,13 +74,13 @@ class Dashboard extends Component{
                             }
                         })
                     }else{
-                        console.log('Insuficient founds')
+                        this.setState({toastMessage:'Insuficient founds'})
                     }
                 }else{
-                    console.log('Emails does not looks like the same')
+                    this.setState({toastMessage:'Emails does not match'})
                 }
             }else{
-                console.log('You must fill all form fields')
+                this.setState({toastMessage:'You must fill all form fields'})
             }
         }else if(type==='REQUEST'){
 
@@ -126,8 +126,8 @@ class Dashboard extends Component{
                     <Label color='white' fontSize={2.4}>Home</Label>
                 </View>
                 <View className='dashboard-balance'>
-                    <Label fontSize={4}>{balance?'$'+balance:'$'+0}</Label>
-                    <View><Label fontSize={2}>Current balance</Label></View>
+                    <Label fontSize={2.5}>{balance?'$'+balance:'$'+0}</Label>
+                    <View><Label fontSize={1}>Current balance</Label></View>
                 </View>
                 <View className='dashboard-actions'>
                     <View className='dashboard-actions-tabs'>
@@ -149,7 +149,7 @@ class Dashboard extends Component{
                 
                 <Menu history={this.props.history} show={menu} userName={userName} onClose={this.handleCloseMenu.bind(this)}/>
                 <View className='dashboard-toast' style={{width:'100%',position:'absolute',top:this.state.toastMessage?'0':'-30%',transition:'.3s',backgroundColor:'#221858',padding:'20px'}}>
-                    <Label fontSize={2} color='white'>{this.state.toastMessage}</Label>
+                    <Label fontSize={1.2} color='white'>{this.state.toastMessage}</Label>
                 </View>
             </View>
         )
