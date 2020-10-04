@@ -9,6 +9,9 @@ import WatchIcon from '@material-ui/icons/WatchLaterRounded';
 import CheckIcon from '@material-ui/icons/CheckCircleRounded';
 import Menu from '../../components/Menu'
 import Api from '../../managers/api'
+import Notifications from '../../managers/notifications'
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 import './styles.css'
 
@@ -20,19 +23,17 @@ class Activity extends Component{
             userName:null,
             balance:0,
             id:null,
-            transactions:[]
+            transactions:[],
+            showLoader:true
         }
     }
 
     componentDidMount(){
         this.checkLogin()
-        
-        
-        
     }
     
     checkLogin(){
-        
+        Notifications.post('SHOW_LOADER')
         Api.users.login(null,(res)=>{
             if(res){
                 this.setState({
@@ -40,14 +41,18 @@ class Activity extends Component{
                     balance: res.user.balance,
                     id: res.user._id
                 })
+                console.log('I am here')
                 const id = this.state.id
                 Api.transactions.get(id,((response)=>{
                     console.log(response)
                     this.setState({
-                        transactions:response
+                        transactions:response,
+                        showLoader:false
                     })
                 }))
+                Notifications.post('HIDE_LOADER')
             }else{
+                Notifications.post('HIDE_LOADER')
                 this.props.history.push('/')
             }
         })
@@ -55,7 +60,7 @@ class Activity extends Component{
 
 
     render(){
-        const {menu,userName,transactions} = this.state
+        const {menu,userName,transactions,showLoader} = this.state
         return(
             <View className='activity' style={{width:'100%',height:'100%',justifyContent:'flex-start'}}>
                 <View className='activity-header' style={{width:'100%'}}>
@@ -63,6 +68,7 @@ class Activity extends Component{
                     <Label color='white' fontSize={2.4}>Activity</Label>
                 </View>
                 <View className='activity-container' style={{width:'100%'}}>
+                    {showLoader?<View style={{padding:'40px'}}><CircularProgress/></View>:null}
                     {transactions.map(transaction=>{
                         return(<View style={{width:'100%',padding:'10px',borderBottom:'1px solid #dddddd',flexDirection:'row',justifyContent:'flex-start'}} key={transaction._id}>
                             <View style={{width:'40px',height:'40px',borderRadius:'50px',backgroundColor:'#8895dc'}}>

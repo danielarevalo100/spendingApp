@@ -2,12 +2,15 @@ import React from 'react'
 import {Component} from 'react'
 
 import Api from '../../managers/api'
+import Notifications from '../../managers/notifications'
+
 
 //Components
 
 import View from '../../components/View'
 import Label from '../../components/Label'
 import Send from './Send'
+import Request from './Request'
 import Menu from '../../components/Menu'
 // styles
 
@@ -18,6 +21,7 @@ import './styles.css'
 import SendIcon from '@material-ui/icons/SendRounded';
 import RequestIcon from '@material-ui/icons/AccountBalanceWalletRounded';
 import MenuIcon from '@material-ui/icons/MenuRounded';
+
 //import ArrowBackIcon from '@material-ui/icons/ArrowBackRounded';
 
 
@@ -30,20 +34,25 @@ class Dashboard extends Component{
             showSend:true,
             menu:false,
             type:'SEND',
-            toastMessage:null
+            toastMessage:null,
+            send:{},
+            request:{}
         }
         this.handleInputChange = this.handleInputChange.bind(this)
     }
 
     //Handlers
 
-    handleInputChange(e){
+    handleInputChange(e,type){
         const name = e.target.name
         const value = e.target.value
-
+        const obj = type
         this.setState({
             ...this.state,
-            [name]:value
+            [obj]:{
+                ...this.state[obj],
+                [name]:value
+            }
         })
     }
     handleCloseMenu(){
@@ -53,26 +62,30 @@ class Dashboard extends Component{
     }
     handleSendSubmit(){
         console.log('submiting')
-        const {id,email,amount,emailConfirmation,balance,type}= this.state;
-
-        if(email && amount && emailConfirmation){
-            if(email === emailConfirmation){
-                if(amount < balance){
-                    Api.transactions.create(id,email,amount,type,(response)=>{
-                        
-                        if('newBalance' in response){
-                            this.setState({toastMessage:'Transfer successful',balance:response.newBalance,email:'',amount:'',emailConfirmation:''})
-                        }
-                    })
+        const {id,balance,type,send}= this.state;
+        if(type==='SEND'){
+            if(send.email && send.amount && send.emailConfirmation){
+                if(send.email === send.emailConfirmation){
+                    if(send.amount < balance){
+                        Api.transactions.create(id,send.email,send.amount,type,(response)=>{
+                            
+                            if('newBalance' in response){
+                                this.setState({toastMessage:'Transfer successful',balance:response.newBalance,send:{}})
+                            }
+                        })
+                    }else{
+                        console.log('Insuficient founds')
+                    }
                 }else{
-                    console.log('Insuficient founds')
+                    console.log('Emails does not looks like the same')
                 }
             }else{
-                console.log('Emails does not looks like the same')
+                console.log('You must fill all form fields')
             }
-        }else{
-            console.log('You must fill all form fields')
+        }else if(type==='REQUEST'){
+
         }
+
     }
     // component life cicle
     componentDidUpdate(){
@@ -88,7 +101,7 @@ class Dashboard extends Component{
         this.checkLogin()
     }
     checkLogin(){
-        
+        Notifications.post('SHOW_LOADER')
         Api.users.login(null,(res)=>{
             if(res){
                 this.setState({
@@ -97,13 +110,15 @@ class Dashboard extends Component{
                     id: res.user._id,
                     
                 })
+                Notifications.post('HIDE_LOADER')
             }else{
+                Notifications.post('HIDE_LOADER')
                 this.props.history.push('/')
             }
         })
     }
     render(){
-        const {balance,userName,showSend,menu}=this.state
+        const {balance,userName,showSend,menu,request,send}=this.state
         return(
             <View className='dashboard'  style={{width:'100%',height:'100%',justifyContent:'flex-start'}}>
                 <View className='dashboard-header' style={{width:'100%'}}>
@@ -127,15 +142,14 @@ class Dashboard extends Component{
                     <View className="dashboard-actions-tabs-marker" style={{left:showSend?'0':'50%'}}></View>
                     </View>
                     {showSend?
-                        <Send handleForm={this.handleInputChange} handleSubmit={this.handleSendSubmit.bind(this)}/>:
-                        <View>
-                            <Label>Comming Soon request</Label>
-                        </View>
+                        <Send handleForm={this.handleInputChange} handleSubmit={this.handleSendSubmit.bind(this)} data={{email: send.email||'', emailConfirmation: send.emailConfirmation||'', amount:send.amount||''}}/>:
+                        <Request handleForm={this.handleInputChange} data={{email: request.email||'', name: request.name||'', amount:request.amount||''}}/>
                     }
                 </View>
+                
                 <Menu history={this.props.history} show={menu} userName={userName} onClose={this.handleCloseMenu.bind(this)}/>
                 <View className='dashboard-toast' style={{width:'100%',position:'absolute',top:this.state.toastMessage?'0':'-30%',transition:'.3s',backgroundColor:'#221858',padding:'20px'}}>
-                <Label fontSize={2} color='white'>{this.state.toastMessage}</Label>
+                    <Label fontSize={2} color='white'>{this.state.toastMessage}</Label>
                 </View>
             </View>
         )
