@@ -5,7 +5,7 @@ import Label from '../../../components/Label'
 
 const Send = (props)=>{
     const {handleSubmit,data}=props
-    console.log(data)
+    
 
  return(<View style={{width:'100%',padding:'15px'}}>
  <form style={{width:'100%'}} onSubmit={(e)=>{e.preventDefault();handleSubmit()}}>

@@ -72,7 +72,7 @@ class Activity extends Component{
                     {transactions.map(transaction=>{
                         return(<View style={{width:'100%',padding:'10px',borderBottom:'1px solid #dddddd',flexDirection:'row',justifyContent:'flex-start'}} key={transaction._id}>
                             <View style={{width:'40px',height:'40px',borderRadius:'50px',backgroundColor:'#8895dc'}}>
-                                {transaction.type==='SEND'?<SendIcon style={{fill:'#ffffff'}}/>:<RequestIcon/>}    
+                                {transaction.type==='SEND'?<SendIcon style={{fill:'#ffffff'}}/>:<RequestIcon style={{fill:'#ffffff'}} />}    
                             </View>
                             <View style={{marginLeft:'10px'}}>
                                 <Label fontSize={1.1}>{`To: ${transaction.email}`}</Label>

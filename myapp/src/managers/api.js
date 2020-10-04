@@ -19,9 +19,11 @@ export default {
         }
     },
     transactions:{
-        create: async (id,email,amount,type,callback)=>{
+        create: async (email,amount,type,name=null,callback)=>{
             try{
-                const data={id,email,amount,type}
+                const data={email,amount,type}
+                data.name = type === 'REQUEST'? name: null
+                request.defaults.headers.common['authorization'] = localStorage.getItem("token");
                 const response= await request.post('https://spending-app-backend.herokuapp.com/api/transactions',{data})
                 if(callback){
                     callback(response.data)

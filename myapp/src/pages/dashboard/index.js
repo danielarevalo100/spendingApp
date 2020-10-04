@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import {Component} from 'react'
 
 import Api from '../../managers/api'
@@ -54,6 +54,7 @@ class Dashboard extends Component{
                 [name]:value
             }
         })
+        
     }
     handleCloseMenu(){
         this.setState({
@@ -62,12 +63,12 @@ class Dashboard extends Component{
     }
     handleSendSubmit(){
         
-        const {id,balance,type,send}= this.state;
+        const {balance,type,send,request}= this.state;
         if(type==='SEND'){
             if(send.email && send.amount && send.emailConfirmation){
                 if(send.email === send.emailConfirmation){
                     if(send.amount < balance){
-                        Api.transactions.create(id,send.email,send.amount,type,(response)=>{
+                        Api.transactions.create(send.email,send.amount,type,null,(response)=>{
                             
                             if('newBalance' in response){
                                 this.setState({toastMessage:'Transfer successful',balance:response.newBalance,send:{}})
@@ -83,7 +84,14 @@ class Dashboard extends Component{
                 this.setState({toastMessage:'You must fill all form fields'})
             }
         }else if(type==='REQUEST'){
-
+            console.log(this.state.request)
+            if(request.email&&request.name&&request.amount){
+                Api.transactions.create(request.email,request.amount,type,request.name,(response)=>{
+                    this.setState({toastMessage:'Transfer successful',request:{}})
+                })
+            }else{
+                this.setState({toastMessage:'You must fill all form fields'})
+            }
         }
 
     }
@@ -107,7 +115,6 @@ class Dashboard extends Component{
                 this.setState({
                     userName: res.user.userName,
                     balance: res.user.balance,
-                    id: res.user._id,
                     
                 })
                 Notifications.post('HIDE_LOADER')
@@ -143,7 +150,7 @@ class Dashboard extends Component{
                     </View>
                     {showSend?
                         <Send handleForm={this.handleInputChange} handleSubmit={this.handleSendSubmit.bind(this)} data={{email: send.email||'', emailConfirmation: send.emailConfirmation||'', amount:send.amount||''}}/>:
-                        <Request handleForm={this.handleInputChange} data={{email: request.email||'', name: request.name||'', amount:request.amount||''}}/>
+                        <Request handleSubmit={this.handleSendSubmit.bind(this)} handleForm={this.handleInputChange} data={{email: request.email||'', name: request.name||'', amount:request.amount||''}}/>
                     }
                 </View>
                 
