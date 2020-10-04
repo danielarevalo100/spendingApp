@@ -6,7 +6,7 @@ export default {
         login: async (password,callback) => {
             try{
                 request.defaults.headers.common['authorization'] = localStorage.getItem("token");
-                const response = await request.post('http://localhost:8080/api/users/login',{password})
+                const response = await request.post('https://spending-app-backend.herokuapp.com/api/users/login',{password})
                 if(callback){
                     if(response.status===200){
                         
@@ -37,7 +37,7 @@ export default {
             try{
 
                 request.defaults.headers.common['authorization'] = localStorage.getItem("token");
-                const response = await request.get('http://localhost:8080/api/transactions/')
+                const response = await request.get('https://spending-app-backend.herokuapp.com/api/transactions/')
                 if(callback){
                     callback(response.data)
                 }else{
