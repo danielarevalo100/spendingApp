@@ -48,7 +48,7 @@ class Login extends Component{
             const props = this.props
             Api.users.login(this.state.password,(result)=>{
                 if(result){
-                    console.log("sending",this.state.password);
+                    
                     localStorage.setItem('token',result.token)
                     
                     props.history.push('/dashboard')

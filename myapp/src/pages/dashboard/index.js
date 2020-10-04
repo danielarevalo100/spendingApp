@@ -84,7 +84,7 @@ class Dashboard extends Component{
                 this.setState({toastMessage:'You must fill all form fields'})
             }
         }else if(type==='REQUEST'){
-            console.log(this.state.request)
+            
             if(request.email&&request.name&&request.amount){
                 Api.transactions.create(request.email,request.amount,type,request.name,(response)=>{
                     this.setState({toastMessage:'Transfer successful',request:{}})
@@ -111,6 +111,7 @@ class Dashboard extends Component{
     checkLogin(){
         Notifications.post('SHOW_LOADER')
         Api.users.login(null,(res)=>{
+            
             if(res){
                 this.setState({
                     userName: res.user.userName,

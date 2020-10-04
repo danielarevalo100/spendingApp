@@ -43,13 +43,13 @@ class Activity extends Component{
                 })
                 
                 const id = this.state.id
-                Api.transactions.get(id,((response)=>{
+                Api.transactions.get((response)=>{
                     
                     this.setState({
                         transactions:response,
                         showLoader:false
                     })
-                }))
+                })
                 Notifications.post('HIDE_LOADER')
             }else{
                 Notifications.post('HIDE_LOADER')
