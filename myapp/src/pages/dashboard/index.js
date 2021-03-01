@@ -115,7 +115,7 @@ class Dashboard extends Component{
             if(res){
                 this.setState({
                     userName: res.user.userName,
-                    balance: res.user.balance,
+                    balance: parseInt(res.user.balance).toFixed(1),
                     
                 })
                 Notifications.post('HIDE_LOADER')
