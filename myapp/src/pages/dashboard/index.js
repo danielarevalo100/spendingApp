@@ -67,7 +67,10 @@ class Dashboard extends Component{
         if(type==='SEND'){
             if(send.email && send.amount && send.emailConfirmation){
                 if(send.email === send.emailConfirmation){
-                    if(send.amount < balance){
+                  console.log('send amount', send.amount)
+                  console.log('balance', balance)
+                  console.log('comparison',(Number(send.amount) <= Number(balance)) )
+                    if(Number(send.amount) <= Number(balance)){
                         Api.transactions.create(send.email,send.amount,type,null,(response)=>{
                             
                             if('newBalance' in response){

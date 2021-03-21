@@ -68,14 +68,14 @@ class Activity extends Component{
                     <Label color='white' fontSize={2.4}>Activity</Label>
                 </View>
                 <View className='activity-container' style={{width:'100%'}}>
-                    {showLoader?<View style={{padding:'40px'}}><CircularProgress/></View>:null}
+                    {showLoader ? <View style={{padding:'40px'}}><CircularProgress/></View> : null}
                     {transactions.map(transaction=>{
                         return(<View style={{width:'100%',padding:'10px',borderBottom:'1px solid #dddddd',flexDirection:'row',justifyContent:'flex-start'}} key={transaction._id}>
                             <View style={{width:'40px',height:'40px',borderRadius:'50px',backgroundColor:'#8895dc'}}>
                                 {transaction.type==='SEND'?<SendIcon style={{fill:'#ffffff'}}/>:<RequestIcon style={{fill:'#ffffff'}} />}    
                             </View>
                             <View style={{marginLeft:'10px'}}>
-                                <Label fontSize={1.1}>{`To: ${transaction.email}`}</Label>
+                              <Label fontSize={1.1}>{`${ transaction.type === 'SEND' && 'To: ' || 'From: ' } ${ transaction.email}`}</Label>
                             </View>
                             <View style={{marginLeft:'auto'}}>
                                 {transaction.status == 'PENDING'?<WatchIcon style={{fill:'#ffcf64',fontSize:'35px'}}/>:transaction.status == 'DONE'?<CheckIcon style={{fill:'#049a04',fontSize:'35px'}}/>:<CancelIcon style={{fill:'#e31b1b',fontSize:'35px'}}/>}
