@@ -23,8 +23,6 @@ class App extends Component{
     Notifications.listen('SHOW_LOADER',()=>{this.setState({showLoader: true})})
     Notifications.listen('USER_LOGGED_IN',()=>{this.setState({userAuth: true})})
     Notifications.listen('USER_LOGGED_OUT',()=>{this.setState({userAuth: false})})
-
-
     Notifications.listen('HIDE_LOADER',()=>{this.setState({showLoader: false})})
 
     this.checkLogin();
@@ -34,7 +32,6 @@ class App extends Component{
     Notifications.post('SHOW_LOADER')
     Api.users.login(null,(res) => {
       Notifications.post('HIDE_LOADER')
-      console.log('here')
       if(res){
         this.setState({
           userAuth: true

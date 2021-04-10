@@ -67,14 +67,11 @@ class Dashboard extends Component{
         if(type==='SEND'){
             if(send.email && send.amount && send.emailConfirmation){
                 if(send.email === send.emailConfirmation){
-                  console.log('send amount', send.amount)
-                  console.log('balance', balance)
-                  console.log('comparison',(Number(send.amount) <= Number(balance)) )
                     if(Number(send.amount) <= Number(balance)){
                         Api.transactions.create(send.email,send.amount,type,null,(response)=>{
                             
                             if('newBalance' in response){
-                                this.setState({toastMessage:'Transfer successful',balance:response.newBalance,send:{}})
+                                this.setState({toastMessage:'Transfer successful',balance:Number(response.newBalance.toFixed(1)),send:{}})
                             }
                         })
                     }else{
@@ -118,7 +115,7 @@ class Dashboard extends Component{
             if(res){
                 this.setState({
                     userName: res.user.userName,
-                    balance: parseInt(res.user.balance).toFixed(1),
+                    balance: res.user.balance.toFixed(1),
                     
                 })
                 Notifications.post('HIDE_LOADER')
@@ -128,6 +125,7 @@ class Dashboard extends Component{
             }
         })
     }
+
     render(){
         const {balance,userName,showSend,menu,request,send}=this.state
         return(

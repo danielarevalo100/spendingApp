@@ -61,6 +61,21 @@ export default {
             callback([])
           }
         }catch(err){console.log(err)}
+      },
+
+      changeStatus:  async (params, callback) => {
+
+        try{
+          request.defaults.headers.common['authorization'] = localStorage.getItem("token");
+          const response = await request.post(URL_BASE+'admin/transactions/changeStatus',params)
+          if(callback){
+            if(response.status===200){
+              callback(response.data)
+            }
+          }
+        }catch(err){
+          callback(null)
+        }
       }
     }
   }
